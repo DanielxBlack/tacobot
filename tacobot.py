@@ -31,9 +31,10 @@ def getweekday():
     dayofweek = datetime.datetime.today().weekday()
     weekday = (week[dayofweek])
     if weekday == "Tuesday":
-        print("It's Taco Tuesday!")
+        message = "It's Taco Tuesday!"
     else:
-        print(f"It's {weekday}, meaning it's NOT Taco Tuesday.")
+        message = f"It's {weekday}, meaning it's NOT Taco Tuesday."
+    twitter.update_status(status=message)
     return getweekday
 
 
@@ -41,7 +42,7 @@ def getweekday():
 def getRandomQuote():
     quotes = open('tacoquotes.txt').read().splitlines()
     todaysQuote = random.choice(quotes)
-    print(todaysQuote)
+    message = todaysQuote
     return getRandomQuote
 
 
@@ -50,7 +51,8 @@ def getRandomQuote():
 def getCityTacos():
     cityTacos = open('uscities.txt').read().splitlines()
     tacosinthecity = random.choice(cityTacos)
-    #print(f"Does anyone know where I can get good tacos in {tacosinthecity}?")
+    message = f"Does anyone know where I can get good tacos in {tacosinthecity}?"
+    twitter.update_status(status=message)
     return getCityTacos
 
 """
@@ -58,33 +60,39 @@ def searchTacos():
     print("I see you're talking about tacos. I like tacos.")
     This is still in the works. It will search twitter for taco tweets and
     it will reply to the tweet with "I see you're talking about tacos."
+
+
+def searchPizza():
+    foodToSearch = [pizza, steak, cookies]
+    aFood = random.choice(foodToSearch)
+    print(f"I see you're talking about {aFood}. That is cool, but tacos are best. IMO.")
+
+
+def searchAFood():
+    foodToSearch = ["pizza", "steak", "cookies", "burgers"]
+    aFood = random.choice(foodToSearch)
+    print(f"I see you're talking about {aFood}. That is cool, but tacos are best. IMO.")
+
+
 """
 
 
 # This function is something of a "master" that will pull from a random list
 # of functions that print taco things.
 
-
 def tacobotAction():
     tacobotActions = [getweekday, getRandomQuote, getCityTacos]
     random.choice(tacobotActions)()
     # Set tweeting times to long, random intervals
-    #whenToTweet = [10800, 3600, 7200, 21600, 16200, 8640, 18360] # Random interval for tweets.
-    whenToTweet = [9,5]
+    whenToTweet = [10800, 3600, 7200, 21600, 16200, 8640, 18360] # Random interval for tweets.
     whenToTweet = random.choice(whenToTweet)
     time.sleep(whenToTweet) # Pause for a random number of seconds (hours) then tweet again.
+    return tacobotAction
 
 
 
-
-
-
-
-"""
-
-    #twitter.update_status(status=)
-
-"""
+while True:
+    tacobotAction()
 
 
 
