@@ -37,11 +37,10 @@ def getweekday():
         return getweekday
 
 
-
-    
 ####################################
 # Search for taco tweets and reply.#
 ####################################
+
 
 def searchTacos():
     ids_replied_to = []
@@ -80,13 +79,13 @@ def searchTacos():
             ids_replied_to.append(id)
             with open("ids_replied_to.txt", "w") as filehandle:
                 filehandle.writelines("%s\n" % place for place in ids_replied_to)
+            break
 
 
-                
-                
 #######################
-#    Fck da haterz   #    
-######################                
+#    Fck da haterz   #
+######################
+
 
 def fkTacos():
     ids_replied_to = []
@@ -127,13 +126,13 @@ def fkTacos():
             ids_replied_to.append(id)
             with open("ids_replied_to.txt", "w") as filehandle:
                 filehandle.writelines("%s\n" % place for place in ids_replied_to)
+            break
 
 
-
-                
 ######################################
 # Search for taco tweets and reply.  #
 #####################################
+
 
 def searchNonTacos():
     ids_replied_to = []
@@ -175,7 +174,7 @@ def searchNonTacos():
             ids_replied_to.append(id)
             with open("ids_replied_to.txt", "w") as filehandle:
                 filehandle.writelines("%s\n" % place for place in ids_replied_to)
-
+            break
 
 
 # This will get a random quote from a list of quotes and print it.
