@@ -226,32 +226,3 @@ while True:
 # To to:
 # -- Figure out hattrick - Eating tacos for breakfast, lunch and dinner in
 #    a single day will create hattrick.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
