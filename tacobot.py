@@ -187,6 +187,7 @@ def getRandomQuote():
     return getRandomQuote
 
 
+
 # This will ask where to get tacos in a city pulled randomly from a list
 # of cities and states.
 def getCityTacos():
@@ -206,11 +207,13 @@ def tacobotAction():
     tacobotActions = [getweekday, getRandomQuote, getCityTacos, searchNonTacos, fkTacos, searchTacos]
     random.choice(tacobotActions)()
     # Set tweeting times to long, random intervals
-    whenToTweet = [3600, 7200, 10800, 18000, 7380, 14400, 18600, 5400, 21600]  # Random interval for tweets.
-    whenToTweet = random.choice(whenToTweet)
-    print(f" TacoBot will pause for {whenToTweet} seconds before tweeting again.")
-    time.sleep(whenToTweet)  # Pause for a random number of seconds (hours) then tweet again.
+    #whenToTweet = [3600, 7200, 10800, 18000, 7380, 14400, 18600, 5400, 21600]  # Random interval for tweets.
+    #whenToTweet = random.choice(whenToTweet)
+    #print(f" TacoBot will pause for {whenToTweet} seconds before tweeting again.")
+    #time.sleep(whenToTweet)  # Pause for a random number of seconds (hours) then tweet again.
+    quit()
     return tacobotAction
+
 
 
 while True:
@@ -223,3 +226,32 @@ while True:
 # To to:
 # -- Figure out hattrick - Eating tacos for breakfast, lunch and dinner in
 #    a single day will create hattrick.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
