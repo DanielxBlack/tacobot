@@ -25,7 +25,7 @@ twitter = Twython(consumer_key, consumer_secret, access_token, access_token_secr
 # This will use datetime to get the weekday.
 # If it's Tuesday, it means Taco Tuesday.
 def getweekday():
-    week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    week = ["Sunday,", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     dayofweek = datetime.datetime.today().weekday()
     weekday = week[dayofweek]
     if weekday == "Tuesday":
