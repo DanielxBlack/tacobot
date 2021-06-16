@@ -124,7 +124,7 @@ def fkTacos():
             print("Tweeted: %s" % message)
             id = int(id)
             ids_replied_to.append(id)
-            with open("/home/nux/tacobot/ids_replied_to.txt", "w") as filehandle:
+            with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
                 filehandle.writelines("%s\n" % place for place in ids_replied_to)
             break
 
