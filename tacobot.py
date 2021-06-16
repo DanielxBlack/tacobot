@@ -71,15 +71,17 @@ def searchTacos():
             print()
             print()
         else:
-            twitter_handle = f"@{screen_name}"
-            message = f"{twitter_handle} Hey! I see you're talking about tacos. I like tacos!"
-            twitter.update_status(status=message, in_reply_to_status_id=id)
-            print("Tweeted: %s" % message)
-            id = int(id)
-            ids_replied_to.append(id)
-            with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
-                filehandle.writelines("%s\n" % place for place in ids_replied_to)
-            break
+          liketacos = open("~/tacobot/liketacos.txt").read().splitlines()
+          likeTacos = random.choice(liketacos)
+          twitter_handle = f"@{screen_name}"
+          message = f"{twitter_handle} {likeTacos}"
+          twitter.update_status(status=message, in_reply_to_status_id=id)
+          print("Tweeted: %s" % message)
+          id = int(id)
+          ids_replied_to.append(id)
+          with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
+              filehandle.writelines("%s\n" % place for place in ids_replied_to)
+          break
 
 
 #######################
