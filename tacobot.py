@@ -7,13 +7,13 @@ import time
 import random
 import sys
 
-
 # Third-party Python libraries.
 import requests
 import TwitterSearch
 from twython import Twython
+from textblob import TextBlob
 
-# Custom Python libraries.
+
 # Import API Keys for Auth
 from auth import consumer_key, consumer_secret, access_token, access_token_secret
 
@@ -44,7 +44,7 @@ def getweekday():
 
 def searchTacos():
     ids_replied_to = []
-    with open("~/tacobot/ids_replied_to.txt", "r") as filehandle:
+    with open("./tacobot/ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
 
         for line in filecontents:
@@ -64,24 +64,34 @@ def searchTacos():
         tweet_text = result["text"]
         id = result["id"]
 
-        # post the tweet
-        id = str(id)
-        if id in ids_replied_to:
-            print("skipped as already replied to.")
-            print()
-            print()
+        getSentiment = TextBlob(tweet_text)
+        getSentiment.sentiment
+        getSentiment.sentiment.polarity
+        print(getSentiment.sentiment.polarity)
+        if getSentiment.sentiment.polarity >= 0:
+            # post the tweet
+            id = str(id)
+            if id in ids_replied_to:
+                print("skipped as already replied to.")
+                print()
+                print()
+            else:
+              liketacos = open("./tacobot/liketacos.txt").read().splitlines()
+              likeTacos = random.choice(liketacos)
+              twitter_handle = f"@{screen_name}"
+              message = f"{twitter_handle} {likeTacos}"
+              twitter.update_status(status=message, in_reply_to_status_id=id)
+              print("Tweeted: %s" % message)
+              id = int(id)
+              ids_replied_to.append(id)
+              with open("./tacobot/ids_replied_to.txt", "w") as filehandle:
+                  filehandle.writelines("%s\n" % place for place in ids_replied_to)
+              break
+
         else:
-          liketacos = open("~/tacobot/liketacos.txt").read().splitlines()
-          likeTacos = random.choice(liketacos)
-          twitter_handle = f"@{screen_name}"
-          message = f"{twitter_handle} {likeTacos}"
-          twitter.update_status(status=message, in_reply_to_status_id=id)
-          print("Tweeted: %s" % message)
-          id = int(id)
-          ids_replied_to.append(id)
-          with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
-              filehandle.writelines("%s\n" % place for place in ids_replied_to)
-          break
+            fkTacos()
+
+
 
 
 #######################
@@ -91,7 +101,7 @@ def searchTacos():
 
 def fkTacos():
     ids_replied_to = []
-    with open("~/tacobot/ids_replied_to.txt", "r") as filehandle:
+    with open("./tacobot/ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
 
         for line in filecontents:
@@ -111,24 +121,33 @@ def fkTacos():
         tweet_text = result["text"]
         id = result["id"]
 
-        # post the tweet
-        id = str(id)
-        if id in ids_replied_to:
-            print("skipped as already replied to.")
-            print()
-            print()
+        getSentiment = TextBlob(tweet_text)
+        getSentiment.sentiment
+        getSentiment.sentiment.polarity
+        print(getSentiment.sentiment.polarity)
+        if getSentiment.sentiment.polarity < 0:
+
+            # post the tweet
+            id = str(id)
+            if id in ids_replied_to:
+                print("skipped as already replied to.")
+                print()
+                print()
+            else:
+                insults = open("./tacobot/insults.txt").read().splitlines()
+                theInsult = random.choice(insults)
+                twitter_handle = f"@{screen_name}"
+                message = f"{twitter_handle} {theInsult}"
+                twitter.update_status(status=message, in_reply_to_status_id=id)
+                print("Tweeted: %s" % message)
+                id = int(id)
+                ids_replied_to.append(id)
+                with open("./tacobot/ids_replied_to.txt", "w") as filehandle:
+                    filehandle.writelines("%s\n" % place for place in ids_replied_to)
+                break
         else:
-            insults = open("~/tacobot/insults.txt").read().splitlines()
-            theInsult = random.choice(insults)
-            twitter_handle = f"@{screen_name}"
-            message = f"{twitter_handle} {theInsult}"
-            twitter.update_status(status=message, in_reply_to_status_id=id)
-            print("Tweeted: %s" % message)
-            id = int(id)
-            ids_replied_to.append(id)
-            with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
-                filehandle.writelines("%s\n" % place for place in ids_replied_to)
-            break
+            searchTacos()
+
 
 
 ######################################
@@ -138,7 +157,7 @@ def fkTacos():
 
 def searchNonTacos():
     ids_replied_to = []
-    with open("~/tacobot/ids_replied_to.txt", "r") as filehandle:
+    with open("./tacobot/ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
 
         for line in filecontents:
@@ -174,14 +193,14 @@ def searchNonTacos():
             print("Tweeted: %s" % message)
             id = int(id)
             ids_replied_to.append(id)
-            with open("~/tacobot/ids_replied_to.txt", "w") as filehandle:
+            with open("./tacobot/ids_replied_to.txt", "w") as filehandle:
                 filehandle.writelines("%s\n" % place for place in ids_replied_to)
             break
 
 
 # This will get a random quote from a list of quotes and print it.
 def getRandomQuote():
-    quotes = open("~/tacobot/tacoquotes.txt").read().splitlines()
+    quotes = open("./tacobot/tacoquotes.txt").read().splitlines()
     todaysQuote = random.choice(quotes)
     message = todaysQuote
     twitter.update_status(status=message)
@@ -193,7 +212,7 @@ def getRandomQuote():
 # This will ask where to get tacos in a city pulled randomly from a list
 # of cities and states.
 def getCityTacos():
-    cityTacos = open("~/tacobot/uscities.txt").read().splitlines()
+    cityTacos = open("./tacobot/uscities.txt").read().splitlines()
     tacosinthecity = random.choice(cityTacos)
     message = f"Does anyone know where I can get good tacos in {tacosinthecity}?"
     twitter.update_status(status=message)
