@@ -37,11 +37,8 @@ def getweekday():
         return getweekday
 
 
-####################################
-# Search for taco tweets and reply.#
-####################################
 
-
+# Search for taco tweets and reply.
 def searchTacos():
     ids_replied_to = []
     with open("./ids_replied_to.txt", "r") as filehandle:
@@ -53,6 +50,7 @@ def searchTacos():
             # add item to the list
             ids_replied_to.append(current_place)
 
+    # Search for the word "tacos."
     search_term = "tacos"
     print("Searching Twitter for 'tacos'...")
     results = twitter.cursor(twitter.search, q=search_term)
@@ -64,6 +62,8 @@ def searchTacos():
         tweet_text = result["text"]
         id = result["id"]
 
+        # Perform sentiment analyis using TextBlob
+        # If sentiment is 0 or higher, tacobot will reply politely.
         getSentiment = TextBlob(tweet_text)
         getSentiment.sentiment
         getSentiment.sentiment.polarity
@@ -71,6 +71,8 @@ def searchTacos():
         if getSentiment.sentiment.polarity >= 0:
             # post the tweet
             id = str(id)
+
+            # Do not reply if tweet has already been replied to. This is to avoid spamming.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
                 print()
@@ -88,9 +90,11 @@ def searchTacos():
                     filehandle.writelines("%s\n" % place for place in ids_replied_to)
                 break
 
+        # If sentiment is below 0, tacobot will offer a rude reply.
         else:
             # post the tweet
             id = str(id)
+            # Again, check if the tweet has already been replied to.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
                 print()
@@ -111,10 +115,9 @@ def searchTacos():
 
 
 
-#######################
-#    Fck da haterz   #
-######################
 
+# Fck da haterz!
+# considering removing this now that we have sentiment analysis, but it's still kind of fun to have this codeblock.
 
 def fkTacos():
     ids_replied_to = []
@@ -146,6 +149,8 @@ def fkTacos():
 
             # post the tweet
             id = str(id)
+
+            # Do not reply if tweet has already been replied to. This is to avoid spamming.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
                 print()
@@ -183,11 +188,8 @@ def fkTacos():
                 break
 
 
-######################################
-# Search for taco tweets and reply.  #
-#####################################
 
-
+# Search for tweets about non-taco food, and reply suggesting tacos.
 def searchNonTacos():
     ids_replied_to = []
     with open("./ids_replied_to.txt", "r") as filehandle:
@@ -213,6 +215,8 @@ def searchNonTacos():
 
         # post the tweet
         id = str(id)
+
+        # Do not reply if tweet has already been replied to. This is to avoid spamming.
         if id in ids_replied_to:
             print("skipped as already replied to.")
             print()
