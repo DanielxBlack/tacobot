@@ -24,8 +24,8 @@ twitter = Twython(consumer_key, consumer_secret, access_token, access_token_secr
 
 # This will use datetime to get the weekday.
 # If it's Tuesday, it means Taco Tuesday.
-def getweekday():
-    week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"]
+def get_weekday():
+    week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     dayofweek = datetime.datetime.today().weekday()
     weekday = week[dayofweek]
     if weekday == "Tuesday":
@@ -34,12 +34,11 @@ def getweekday():
         message = f"It's {weekday}, meaning it's NOT Taco Tuesday."
         twitter.update_status(status=message)
         print(f"Tweeting {message}")
-        return getweekday
-
+        return get_weekday
 
 
 # Search for taco tweets and reply.
-def searchTacos():
+def search_tacos():
     ids_replied_to = []
     with open("./ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
@@ -113,13 +112,11 @@ def searchTacos():
                 break
 
 
-
-
-
 # Fck da haterz!
 # considering removing this now that we have sentiment analysis, but it's still kind of fun to have this codeblock.
 
-def fkTacos():
+
+def fk_tacos():
     ids_replied_to = []
     with open("./ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
@@ -188,9 +185,8 @@ def fkTacos():
                 break
 
 
-
 # Search for tweets about non-taco food, and reply suggesting tacos.
-def searchNonTacos():
+def search_non_tacos():
     ids_replied_to = []
     with open("./ids_replied_to.txt", "r") as filehandle:
         filecontents = filehandle.readlines()
@@ -201,7 +197,18 @@ def searchNonTacos():
             # add item to the list
             ids_replied_to.append(current_place)
 
-    search_terms = ["hamburger","burger","hotdog","pizza","sandwich","burrito","beef jerky","bacon","eating tamales","spaghetti"]
+    search_terms = [
+        "hamburger",
+        "burger",
+        "hotdog",
+        "pizza",
+        "sandwich",
+        "burrito",
+        "beef jerky",
+        "bacon",
+        "eating tamales",
+        "spaghetti",
+    ]
     randomFood = random.choice(search_terms)
     print(f"Searching Twitter for {randomFood} ...")
     results = twitter.cursor(twitter.search, q=randomFood)
@@ -236,42 +243,40 @@ def searchNonTacos():
 
 
 # This will get a random quote from a list of quotes and print it.
-def getRandomQuote():
+def get_random_quote():
     quotes = open("./tacoquotes.txt").read().splitlines()
     todaysQuote = random.choice(quotes)
     message = todaysQuote
     twitter.update_status(status=message)
     print(f"Tweeting {message}")
-    return getRandomQuote
-
+    return get_random_quote
 
 
 # This will ask where to get tacos in a city pulled randomly from a list
 # of cities and states.
-def getCityTacos():
+def get_city_tacos():
     cityTacos = open("./uscities.txt").read().splitlines()
     tacosinthecity = random.choice(cityTacos)
     message = f"Does anyone know where I can get good tacos in {tacosinthecity}?"
     twitter.update_status(status=message)
     print(f"Tweeting {message}")
-    return getCityTacos
+    return get_city_tacos
 
 
 # This function is something of a "master" that will pull from a random list
 # of functions that print taco things.
-def tacobotAction():
-    tacobotActions = [getweekday, getRandomQuote, getCityTacos, searchNonTacos, fkTacos, searchTacos]
-    random.choice(tacobotActions)()
+def tacobot_action():
+    tacobot_actions = [get_weekday, get_random_quote, get_city_tacos, search_non_tacos, fk_tacos, search_tacos]
+    random.choice(tacobot_actions)()
     quit()
-    return tacobotAction
-
+    return tacobot_action
 
 
 while True:
     gettheDate = datetime.datetime.now()
     rightNow = gettheDate.strftime("%x")
     print(f"Tacobot ran at {gettheDate}.")
-    tacobotAction()
+    tacobot_action()
 
 
 # To to:
