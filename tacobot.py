@@ -2,13 +2,9 @@
 
 # Standard Python libraries.
 import datetime
-import json
-import time
 import random
-import sys
 
 # Third-party Python libraries.
-import requests
 import TwitterSearch
 from twython import Twython
 from textblob import TextBlob
@@ -74,8 +70,7 @@ def search_tacos():
             # Do not reply if tweet has already been replied to. This is to avoid spamming.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
-                print()
-                print()
+
             else:
                 liketacos = open("./liketacos.txt").read().splitlines()
                 likeTacos = random.choice(liketacos)
@@ -96,8 +91,7 @@ def search_tacos():
             # Again, check if the tweet has already been replied to.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
-                print()
-                print()
+
             else:
                 insults = open("./insults.txt").read().splitlines()
                 theInsult = random.choice(insults)
@@ -150,8 +144,7 @@ def fk_tacos():
             # Do not reply if tweet has already been replied to. This is to avoid spamming.
             if id in ids_replied_to:
                 print("skipped as already replied to.")
-                print()
-                print()
+
             else:
                 insults = open("./insults.txt").read().splitlines()
                 theInsult = random.choice(insults)
@@ -169,8 +162,7 @@ def fk_tacos():
             id = str(id)
             if id in ids_replied_to:
                 print("skipped as already replied to.")
-                print()
-                print()
+
             else:
                 liketacos = open("./liketacos.txt").read().splitlines()
                 likeTacos = random.choice(liketacos)
@@ -206,9 +198,12 @@ def search_non_tacos():
         "burrito",
         "beef jerky",
         "bacon",
-        "eating tamales",
         "spaghetti",
+        "eating tamales",
+        "eating nachos",
+        "steak",
     ]
+
     randomFood = random.choice(search_terms)
     print(f"Searching Twitter for {randomFood} ...")
     results = twitter.cursor(twitter.search, q=randomFood)
@@ -226,8 +221,7 @@ def search_non_tacos():
         # Do not reply if tweet has already been replied to. This is to avoid spamming.
         if id in ids_replied_to:
             print("skipped as already replied to.")
-            print()
-            print()
+
         else:
             twitter_handle = f"@{screen_name}"
             message = (
@@ -255,9 +249,9 @@ def get_random_quote():
 # This will ask where to get tacos in a city pulled randomly from a list
 # of cities and states.
 def get_city_tacos():
-    cityTacos = open("./uscities.txt").read().splitlines()
-    tacosinthecity = random.choice(cityTacos)
-    message = f"Does anyone know where I can get good tacos in {tacosinthecity}?"
+    city_Tacos = open("./uscities.txt").read().splitlines()
+    tacos_In_The_City = random.choice(city_Tacos)
+    message = f"Does anyone know where I can get good tacos in {tacos_In_The_City}?"
     twitter.update_status(status=message)
     print(f"Tweeting {message}")
     return get_city_tacos
@@ -272,6 +266,7 @@ def tacobot_action():
     return tacobot_action
 
 
+# This is really just for when I'm debugging or checking when Tacobot ran. Nothing really important here.
 while True:
     gettheDate = datetime.datetime.now()
     rightNow = gettheDate.strftime("%x")
